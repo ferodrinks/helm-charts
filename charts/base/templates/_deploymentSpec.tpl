@@ -142,7 +142,7 @@ env:
         key: {{ $opts.key }}
 {{- end }}
 {{- range $key, $value := .environment.variables }}
-{{- $valueStr := $value | toString }}
+{{- $valueStr := include "base.valueString" $value }}
   - name: {{ $key | quote }}
     value: {{ if eq $valueStr "<nil>" }}""{{ else }}{{ $valueStr | quote }}{{ end }}
 {{- end }}
