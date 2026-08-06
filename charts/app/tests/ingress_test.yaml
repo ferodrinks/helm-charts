@@ -145,7 +145,7 @@ tests:
           path: kind
           value: Ingress
 
-  - it: should currently treat a port name containing a digit as a number
+  - it: should treat a port name containing a digit as a name
     set:
       ingress.enabled: true
       ingress.hosts:
@@ -153,7 +153,7 @@ tests:
           servicePort: http2
     asserts:
       - equal:
-          path: spec.rules[0].http.paths[0].backend.service.port.number
+          path: spec.rules[0].http.paths[0].backend.service.port.name
           value: http2
         documentSelector:
           path: kind
