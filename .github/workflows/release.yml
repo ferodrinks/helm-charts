@@ -27,17 +27,10 @@ jobs:
         with:
           version: v4.2.3
 
-      - name: Package every chart
-        run: |
-          for chart in charts/*/; do
-            helm package --dependency-update "$chart" --destination .cr-release-packages
-          done
-
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         with:
           version: v1.8.1
-          skip_packaging: true
           skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
