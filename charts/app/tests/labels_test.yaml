@@ -3,6 +3,8 @@ templates:
   - templates/base.yaml
 release:
   name: my-release
+chart:
+  version: 9.9.9
 set:
   image.repository: example.com/app
   image.tag: "1.2.3"
@@ -13,7 +15,7 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            helm.sh/chart: app-0.17.3
+            helm.sh/chart: app-9.9.9
             app.kubernetes.io/instance: my-release
             app.kubernetes.io/managed-by: Helm
         documentSelector:

@@ -289,7 +289,7 @@ define topologySpreadConstraints
 {{- if or (and (index .Values "topologySpreadConstraintsDefault") (index .Values.topologySpreadConstraintsDefault "enabled")) .Values.topologySpreadConstraints }}
 topologySpreadConstraints:
 {{- with .Values.topologySpreadConstraints }}
-{{ toYaml . | indent 2 }}
+{{ toYaml . }}
 {{- end }}
 {{- if .Values.topologySpreadConstraintsDefault.enabled }}
 - labelSelector:
