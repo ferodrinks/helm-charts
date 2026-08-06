@@ -1,0 +1,24 @@
+apiVersion: v2
+name: default-base
+description: A Helm chart for Kubernetes - default-base for namespaces
+
+version: 0.17.3
+
+keywords:
+  - BackendConfig
+  - StorageClass
+  - pvc
+  - configmap
+  - secret
+  - tls
+  - dockerconfigjson
+  - rbac
+
+maintainers:
+  - name: juri
+    url: https://github.com/ferodrinks/helm-charts
+
+dependencies:
+  - name: base
+    version: ~0
+    repository: file://../base

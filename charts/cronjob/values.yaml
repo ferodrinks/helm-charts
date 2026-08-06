@@ -1,0 +1,150 @@
+image:
+  # repository:
+  # pullPolicy: IfNotPresent
+  tag: "latest"
+
+# schedule: ""
+
+## ref: https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy
+concurrencyPolicy: "Forbid"
+failedJobsHistoryLimit: 2
+successfulJobsHistoryLimit: 2
+backoffLimit: "0"
+# activeDeadlineSeconds: 10800
+# podActiveDeadlineSeconds: 10000
+# ttlSecondsAfterFinished: 3600
+restartPolicy: "Never"
+# completions: 12
+# parallelism: 3
+# suspend: "true"
+
+# podFailurePolicy:
+#   rules:
+#   - action: FailJob
+#     onExitCodes:
+#       containerName: main      # optional
+#       operator: In             # one of: In, NotIn
+#       values: [42]
+#   - action: Ignore             # one of: Ignore, FailJob, Count
+#     onPodConditions:
+#     - type: DisruptionTarget   # indicates Pod disruption
+
+# namespace: default
+
+## main labels (overrides default helm labels)
+# labels:
+#   key: value
+
+## pod level labels
+# podLabels:
+#   key: value
+
+## annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+annotations: {}
+
+## add extra annotations to pod metadata
+podAnnotations: {}
+
+## secret name for dockerconfigjson secret
+# imagePullSecrets:
+#   - name: image-pull-secret
+
+podSecurityContext: {}
+
+securityContext: {}
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+## simple way to add variables
+# environment:
+#   variables:
+#     SERVER_PORT: "3000"
+#     NODE_ENV: "staging"
+#   secretVariables:
+#     VAR_NAME_IN_CONTAINER:
+#       name: secret_name
+#       key: SECRET_KEY_REFERENCE_NAME
+#   configmapVariables:
+#     VAR_NAME_IN_CONTAINER:
+#       name: configmap_name
+#       key: CONFIGMAP_KEY_REFERENCE_NAME
+#     VAR_NAME_IN_CONTAINER_2:
+#       name: configmap_name
+#       key: CONFIGMAP_KEY_REFERENCE_NAME_2
+## with metadata you can get info, lipe pod name, namespace, ip intot he variable. ref: https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
+#   metadata:
+#     POD_NAME: metadata.name
+## load env vars from configmap
+#   envFromConfigMaps:
+#     - shared-config
+## load env vars from secrets
+#   envFromSecrets:
+#     - shared-secret
+
+# extraContainers:
+#   container-name:
+#     image:
+#       ## if no image defined, then image from default container will be taken
+#       repository: ""
+#       pullPolicy: IfNotPresent
+#       tag: ""
+#     resources:
+#     securityContext:
+#     environment:
+#       variables:
+#     args:
+#       - arg1
+#     command:
+#       - command
+#     volumeMounts:
+#     ## can define volumes at this point or at .Values.volumes
+#     volumes:
+
+# initContainers:
+#   container-name:
+#     image:
+#       ## if no image defined, then image from default container will be taken
+#       repository: ""
+#       pullPolicy: IfNotPresent
+#       tag: ""
+#     resources:
+#     securityContext:
+#     environment:
+#       variables:
+#     args:
+#       - arg1
+#     command:
+#       - command
+#     volumeMounts:
+
+## to add volume mounts entries (follow https://kubernetes.io/docs/concepts/storage/volumes/ for syntax)
+# volumes:
+# - name: volume-name
+#   secret:
+#     defaultMode: 420
+#     secretName: secret-name
+# volumes:
+#   - name: volume-name
+#     secret:
+#       secretName: volume-name
+#       items:
+#       - key: service.json
+#         path: service.json
+
+# volumeMounts:
+#   - mountPath: /src/service.json
+#       subPath: service.json
+#     name: volume-name
+#     readOnly: true
+
+## specify service account
+# serviceAccountName: sa-name
+
+## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+## automountServiceAccountToken: false

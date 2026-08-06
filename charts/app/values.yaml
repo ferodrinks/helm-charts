@@ -1,0 +1,559 @@
+# Default values
+
+## set number of desired replics per environment (will be overriden if hpa is enabled (autoscaling))
+replicas: 1
+
+# namespace: default
+
+## set repository in the defaults.yaml
+image:
+  ## has to be passed
+  # repository: ""
+  ## default imagePullPolicy is IfNotPresent, and if tag doesn't have a number(int) in it, then switched to Always
+  # pullPolicy: IfNotPresent
+  ## default tag, pipeline should add latest tag when pushing to production
+  ## tag will be passed automatically through pipeline
+  tag: "latest"
+
+## secret name for dockerconfigjson secret
+# imagePullSecrets:
+#   - name: image-pull-secret
+
+## you can override the name of your deployment, which will manifest in naming conventions of deployment
+# fullnameOverride: ""
+
+## you can override the name of your main container
+# nameOverride: ""
+
+## main labels (overrides default helm labels)
+# labels:
+#   key: value
+
+## pod level labels
+# podLabels:
+#   key: value
+
+## override main selector labels
+# selectorLabels:
+#   app: app-blue
+
+## add labels to deployment metadata
+# labelsDeployment:
+#   key: value
+
+## annotation: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+annotations: {}
+
+## add extra annotations to pod metadata
+podAnnotations: {}
+
+## default update strategy if HorizontalPodAutoscaler (autoscaling) is not enabled
+## .Values.argo.rollouts.strategy will take priority
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+strategy: {}
+  # type: RollingUpdate
+  # rollingUpdate:
+  #   maxUnavailable: 0
+
+## define security context at pod level
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+podSecurityContext: {}
+  # fsGroup: 2000
+
+## define security context at container level
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
+# priorityClassName: name
+# priority: 0
+# preemptionPolicy: PreemptLowerPriority
+
+## ref: https://cloud.google.com/kubernetes-engine/docs/how-to/container-native-load-balancing
+# terminationGracePeriodSeconds: 180
+# minReadySeconds: 10
+
+## configure service
+service:
+  enabled: true
+  ## override the service name (default is release name or Values.fullnameOverride)
+  # name: service-name
+  ## change type to NodePort if gce ingress (ClusterIP is better for Nginx ingress)
+  # type: ClusterIP
+  # annotations:
+  #   key: value
+  # labels:
+  #   key: value
+  # loadBalancerIP: ""
+  ##
+  # clusterIP: ""
+  # externalTrafficPolicy: Cluster
+  ##
+  ports: []
+    # - port: 8080
+    #   targetPort: 9090 # default .port
+    #   protocol: "" # default "TCP"
+    #   name: net # default "http"
+    #   nodePort: # not needed
+    # - port: 9090
+  ## if ports not defined, then .Values.ports will be used. If none defined, then http: 80
+  ##
+  ## https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+  # externalName: my.database.example.com
+  ##
+  # sessionAffinity: "ClientIP"
+
+## for extra services
+# extraServices:
+#   servicetwo:
+#     ports:
+#       - port: 8090
+#         targetPort: 9090
+
+## ports for default container
+ports: []
+#   - containerPort: 8080
+#     name: http
+#     protocol: TCP
+#   - containerPort: 9090
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# livenessProbe:
+#   httpGet:
+#     path: /actuator/health
+#     port: http
+#     scheme: HTTP
+#   initialDelaySeconds: 300
+#   periodSeconds: 10
+#   successThreshold: 1
+#   timeoutSeconds: 5
+#   failureThreshold: 3
+# readinessProbe:
+#   httpGet:
+#     path: /actuator/health
+#     port: http
+#     scheme: HTTP
+#   initialDelaySeconds: 15
+#   periodSeconds: 10
+#   successThreshold: 1
+#   timeoutSeconds: 5
+#   failureThreshold: 3
+
+## ref: https://kubernetes.io/docs/tutorials/services/connect-applications-service/
+# enableServiceLinks: false
+
+## specify service account
+# serviceAccountName: sa-name
+
+## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+## automountServiceAccountToken: false
+
+## quick extra annotations for prometheus scrape config
+## example: https://stackoverflow.com/questions/53365191/monitor-custom-kubernetes-pod-metrics-using-prometheus
+## enable prometheus.io/scrape (boolean)
+prometheusScrape: false
+## define prometheus.io/port
+prometheusScrapePort: http
+## define prometheus.io/path
+prometheusScrapePath: /actuator/prometheus
+
+## enable HorizontalPodAutoscalers
+autoscaling:
+  enabled: false
+  scaleTargetRef: {}
+  minReplicas: 2
+  maxReplicas: 10
+  # pubsub_subscription:
+  # - subscription_id: "subscription"
+  #   metric: "num_undelivered_messages"
+  #   AverageValue: 200
+  # cpu:
+  # - type: Utilization
+  #   averageUtilization: 50
+  # memory:
+  # - averageUtilization: 50
+  # ingress_requests:
+  #   - name: requests-per-second
+  #     ingress_name: custom_ingress
+  #     value: 10k
+  ## other custom metrics
+  # metrics:
+  # - type: Pods
+  #   pods:
+  #     metric:
+  #       name: packets-per-second
+  #     target:
+  #       type: AverageValue
+  #       averageValue: 1k
+  # apiVersion: autoscaling/v2
+  # behavior:
+  #   scaleDown:
+  #     stabilizationWindowSeconds: 300
+
+## https://keda.sh/docs/latest/reference/scaledobject-spec/
+keda:
+  enabled: false
+  # apiVersion: keda.sh/v1alpha1
+  # annotations:
+  #   scaledobject.keda.sh/transfer-hpa-ownership: "true"     # Optional. Use to transfer an existing HPA ownership to this ScaledObject
+  #   validations.keda.sh/hpa-ownership: "true"               # Optional. Use to disable HPA ownership validation on this ScaledObject
+  #   autoscaling.keda.sh/paused: "true"                      # Optional. Use to pause autoscaling of objects explicitly
+  scaleTargetRef: {}
+  # scaleTargetRef:
+  #   apiVersion:    {api-version-of-target-resource}         # Optional. Default: apps/v1
+  #   kind:          {kind-of-target-resource}                # Optional. Default: Deployment
+  #   name:          {name-of-target-resource}                # Mandatory. Must be in the same namespace as the ScaledObject
+  #   envSourceContainerName: {container-name}                # Optional. Default: .spec.template.spec.containers[0]
+  # pollingInterval:  30                                      # Optional. Default: 30 seconds
+  # cooldownPeriod:   300                                     # Optional. Default: 300 seconds
+  # initialCooldownPeriod:  0                                 # Optional. Default: 0 seconds
+  # idleReplicaCount: 0                                       # Optional. Default: ignored, must be less than minReplicaCount
+  minReplicaCount: 1
+  maxReplicaCount: 20
+  # fallback:                                                 # Optional. Section to specify fallback options
+  #   failureThreshold: 3                                     # Mandatory if fallback section is included
+  #   replicas: 6                                             # Mandatory if fallback section is included
+  # advanced:                                                 # Optional. Section to specify advanced options
+  #   restoreToOriginalReplicaCount: true/false               # Optional. Default: false
+  #   horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
+  #     name: {name-of-hpa-resource}                          # Optional. Default: keda-hpa-{scaled-object-name}
+  #     behavior:                                             # Optional. Use to modify HPA's scaling behavior
+  #       scaleDown:
+  #         stabilizationWindowSeconds: 300
+  #         policies:
+  #         - type: Percent
+  #           value: 100
+  #           periodSeconds: 15
+  # triggers:
+  # # {list of triggers to activate scaling of the target resource}
+
+  # TriggerAuthentication: ## or ClusterTriggerAuthentication
+  #   - name: Name
+  #     spec:
+  #       secretTargetRef:
+  #       - parameter: GoogleApplicationCredentials
+  #         name: cloudtasks-secret        # Required. Refers to the name of the secret
+  #         key: GOOGLE_APPLICATION_CREDENTIALS_JSON       # Required.
+  #       podIdentity:
+  #         provider: gcp
+
+# ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+podDisruptionBudget:
+  enabled: false
+  ## default minAvailable is taken from autoscaling.minReplicas if autoscaling enabled, otherwise from replicas (devided by half)
+  # minAvailable: 1
+  # maxUnavailable: 1
+
+## ref: https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling
+verticalPodAutoscaler:
+  enabled: false
+  updateMode: "Off"
+
+nodeSelector: {}
+
+tolerations: []
+
+# affinity: {}
+
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+podAntiAffinity:
+  enabled: false
+  # hard for requiredDuringSchedulingIgnoredDuringExecution and soft for preferredDuringSchedulingIgnoredDuringExecution
+  type: soft
+  ## default topologies
+  topology:
+  - weight: 50
+    topologyKey: "kubernetes.io/hostname"
+  - weight: 100
+    topologyKey: "topology.kubernetes.io/zone"
+
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+topologySpreadConstraintsDefault:
+  enabled: false
+  maxSkew: 1
+  topologyKey: "topology.kubernetes.io/zone"
+  whenUnsatisfiable: ScheduleAnyway
+
+# topologySpreadConstraints:
+# - labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/component: app
+#   maxSkew: 1
+#   topologyKey: topology.kubernetes.io/zone
+#   whenUnsatisfiable: ScheduleAnyway
+
+lifecycle: {}
+
+# extraContainers:
+#   container-name:
+#     image:
+#       ## if no image defined, then image from default container will be taken
+#       repository: ""
+#       pullPolicy: IfNotPresent
+#       tag: ""
+#     resources:
+#     securityContext:
+#     environment:
+#       variables:
+#     args:
+#       - arg1
+#     command:
+#       - command
+#     volumeMounts:
+#     ## can define volumes at this point or at .Values.volumes
+#     volumes:
+
+# initContainers:
+#   container-name:
+#     image:
+#       ## if no image defined, then image from default container will be taken
+#       repository: ""
+#       pullPolicy: IfNotPresent
+#       tag: ""
+#     resources:
+#     securityContext:
+#     environment:
+#       variables:
+#     args:
+#       - arg1
+#     command:
+#       - command
+#     volumeMounts:
+
+## simple way to add variables
+# environment:
+#   variables:
+#     SERVER_PORT: "3000"
+#     NODE_ENV: "staging"
+#   secretVariables:
+#     VAR_NAME_IN_CONTAINER:
+#       name: secret_name
+#       key: SECRET_KEY_REFERENCE_NAME
+#   configmapVariables:
+#     VAR_NAME_IN_CONTAINER:
+#       name: configmap_name
+#       key: CONFIGMAP_KEY_REFERENCE_NAME
+#     VAR_NAME_IN_CONTAINER_2:
+#       name: configmap_name
+#       key: CONFIGMAP_KEY_REFERENCE_NAME_2
+## with metadata you can get info, lipe pod name, namespace, ip intot he variable. ref: https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
+#   metadata:
+#     POD_NAME: metadata.name
+## load env vars from configmap
+#   envFromConfigMaps:
+#     - shared-config
+## load env vars from secrets
+#   envFromSecrets:
+#     - shared-secret
+
+## to add volume mounts entries (follow https://kubernetes.io/docs/concepts/storage/volumes/ for syntax)
+# volumes:
+# - name: volume-name
+#   secret:
+#     defaultMode: 420
+#     secretName: secret-name
+# volumes:
+#   - name: volume-name
+#     secret:
+#       secretName: volume-name
+#       items:
+#       - key: service.json
+#         path: service.json
+
+# volumeMounts:
+#   - mountPath: /src/service.json
+#       subPath: service.json
+#     name: volume-name
+#     readOnly: true
+
+## ingress configuration
+ingress:
+  ## to enable - switch to true
+  enabled: false
+  class: nginx
+  annotations: {}
+    # kubernetes.io/tls-acme: "true"
+  ## to override default dackend
+  # backend:
+  #   serviceName: default-http-backend
+  #   servicePort: 80
+  #   resource:
+  #     apiGroup: k8s.example.com
+  #     kind: StorageBucket
+  #     name: icon-assets
+  hosts: {}
+    # - host: chart-example.local
+    ## by default serviceName will be taken from Release Name or Values.fullnameOverride , to override add:
+    #   serviceName: service_name
+    ## by default servicePort will be taken from Values.service.ports (http or first in the list), otherwise from .Values.ports, to override add:
+    #   servicePort: 8080
+    # - host: chart-example-2.local
+    #   resource:
+    #     apiGroup: k8s.example.com
+    #     kind: StorageBucket
+    #     name: icon-assets
+    # - host: chart-example-2.local
+      # paths:
+      #   - path: "boo"
+      #   - path: "foo"
+  tls: []
+  ## tls section will be automatically generated, to override add:
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+## to override default tls secret name add:
+# tls:
+#   default: default-tls-secret-name
+
+ingressList: []
+# - name: test-2 (optional)
+#   class: nginx (optional)
+#   annotations:
+#     nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8
+#   hosts:
+#     - host: test.example.com
+#       paths:
+#         - path: /api
+
+## creating secrets:
+# secrets:
+#     encoded:
+#     -   name: sa-credentials
+#         values:
+#             service.json: BASE64_VALUE
+#     decoded:
+#     -   name: secret-values
+#         values:
+#             KEY_NAME1: DECODED_VALUE
+#             KEY_NAME2: DECODED_VALUE
+#     -   name: secret-values2
+#         values:
+#             KEY_NAME3: DECODED_VALUE
+
+## creating configmaps
+# configmaps:
+#   - name: configmap_name
+#     values:
+#       KEY1: VALUE
+#       KEY2: VALUE
+#     valuesMultiLine:
+#       config.json: |-
+#         {
+#           "key": value
+#         }
+
+## Argo CD rollouts
+## ref: https://argoproj.github.io/argo-rollouts/migrating/
+## ref spec: https://argoproj.github.io/argo-rollouts/features/specification/
+
+## ref: https://argoproj.github.io/argo-rollouts/migrating/#convert-deployment-to-rollout
+## change apiVersion and kind to Convert Deployment to Rollout
+# apiVersion: argoproj.io/v1alpha1
+# kind: Rollout
+
+argo:
+  rollouts:
+    enabled: false
+    ## ref: https://argoproj.github.io/argo-rollouts/migrating/#convert-deployment-to-rollout
+    ## changing apiVersion and kind to Convert Deployment to Rollout
+    type: Deployment
+    ## https://argoproj.github.io/argo-rollouts/migrating/#reference-deployment-from-rollout
+    ## Reference Deployment From Rollout (true)
+    ## type: workloadRef
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    strategy: {}
+      # canary:
+      #   steps:
+      #     - setWeight: 20
+      #     - pause: {duration: 10s}
+      # blueGreen:
+      #   activeService: devops-demo
+      #   previewService: devops-demo-preview
+      #   prePromotionAnalysis:
+      #     templates:
+      #     - templateName: app
+  analysis:
+    enabled: false
+    # # Optional
+    # name: foobar
+    # # --
+    # metrics:
+    #   - name: e2e-test
+    #     failureLimit: 0
+    #     provider:
+    #       job:
+    #         spec:
+    #           template:
+    #             spec:
+    #               containers:
+    #               - name: sleep
+    #                 image: alpine:3.12
+    #                 command: [sh, -c]
+    #                 args: [nc -vvvv devops-demo-preview 80]
+    #               restartPolicy: Never
+    #           backoffLimit: 0
+    #     count: 1
+
+# ClusterRoleBinding:
+#   - name: clusterrolebinding-cluster-admin
+#     UserLists:
+#       - admins
+#     ClusterRoleName: cluster-admin
+#   - name: clusterrolebinding-edit
+#      subjects:
+#      - ...
+#     UserLists:
+#       - devops
+#     ClusterRoleName: edit
+#   - name: clusterrolebinding-view
+#     kubeGroups:
+#       - system:authenticated
+#     ClusterRoleName: view
+#  subjects:
+#   - ...
+
+# RoleBinding:
+#   - name: rolebinding-default-edit
+#     namespace: default
+#      subjects:
+#      - ...
+#     groups:
+#       - engineer
+#     ClusterRoleName: edit
+
+# RbacUserLists:
+#   devops:
+#     - user@mail.com
+
+# ServiceAccount:
+#   - name: name
+
+# revisionHistoryLimit: 10
+
+
+
+## StatefulSet configuration
+
+## change to try to create StatefulSet instead of Deployment
+statefulSet: false
+
+# serviceName: name-of-headless-service
+
+# volumeClaimTemplates: []
+
+persistentVolumeClaimRetentionPolicy:
+  whenDeleted: Retain
+  whenScaled: Retain

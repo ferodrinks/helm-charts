@@ -1,0 +1,67 @@
+# Default values for ingress.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+ingress:
+  enabled: true
+  # class: nginx
+  annotations: {}
+    # kubernetes.io/tls-acme: "true"
+  # namespace: default
+  ## to override default dackend
+  # backend:
+  #   serviceName: default-http-backend
+  #   servicePort: 80
+  #   resource:
+  #     apiGroup: k8s.example.com
+  #     kind: StorageBucket
+  #     name: icon-assets
+  hosts: {}
+    # - host: chart-example.local
+    ## by default serviceName will be taken from Release Name or Values.fullnameOverride , to override add:
+    #   serviceName: service_name
+    ## by default servicePort will be taken from Values.service.ports (http or first in the list), otherwise from .Values.ports, to override add:
+    #   servicePort: 8080
+    # - host: chart-example-2.local
+    #   resource:
+    #     apiGroup: k8s.example.com
+    #     kind: StorageBucket
+    #     name: icon-assets
+    # - host: chart-example-2.local
+      # paths:
+      #   - path: "boo"
+      #   - path: "foo"
+
+  tls: []
+  ## tls section will be automatically generated, to override add:
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+## to override default tls secret name add:
+# tls:
+#   default: default-tls-secret-name
+
+# namespace: default
+
+## can be used to define default port name ("http")
+service: {}
+#   ports:
+#     ## will take first match "http"
+#     http: 8080
+
+ingressList: []
+# - name: test-2 (optional)
+#   class: nginx (optional)
+#   annotations:
+#     nginx.ingress.kubernetes.io/whitelist-source-range: 10.0.0.0/8
+#   hosts:
+#     - host: test.example.com
+#       paths:
+#         - path: /api
+
+service:
+  enabled: false

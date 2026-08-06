@@ -1,0 +1,37 @@
+# Default values for ingress.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+# namespace: default
+
+## configure service
+service:
+  enabled: true
+  ## override the service name (default is release name or Values.fullnameOverride)
+  # name: service-name
+  ## change type to NodePort if gce ingress (ClusterIP is better for Nginx ingress)
+  # type: ClusterIP
+  # annotations:
+  #   key: value
+  # labels:
+  #   key: value
+  # loadBalancerIP: ""
+  ##
+  # clusterIP: ""
+  # externalTrafficPolicy: Cluster
+  ##
+  # ports:
+    # - port: 8080
+    #   targetPort: 9090 # default .port
+    #   protocol: "" # default "TCP"
+    #   name: net # default "http-Index"
+    #   nodePort: # not needed
+  ## if ports not defined, then .Values.ports will be used.
+  ##
+  ## https://kubernetes.io/docs/concepts/services-networking/service/#externalname
+  # externalName: my.database.example.com
+  ##
+  # sessionAffinity: "ClientIP"

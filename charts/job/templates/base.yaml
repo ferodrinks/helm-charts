@@ -1,0 +1,6 @@
+{{ include "base.configmaps" . }}
+{{ include "base.secrets" . }}
+{{ include "base.job" . }}
+{{ include "base.rbac" . }}
+{{ include "base.pvc" . }}
+{{ include "base.raw" . }}

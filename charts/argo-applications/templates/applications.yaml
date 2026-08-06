@@ -1,0 +1,57 @@
+{{- if .Values.applications }}
+{{- $appDefaults := .Values.applicationsDefaults -}}
+apiVersion: v1
+kind: List
+items:
+{{- range $appValuesOrig := .Values.applications }}
+{{- $appValues := mergeOverwrite (dict) (deepCopy $appDefaults) $appValuesOrig }}
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      {{- if $appValues.additionalAnnotations }}
+      annotations:
+      {{- range $key, $value := $appValues.additionalAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      {{- end }}
+      {{- with $appValues.additionalLabels }}
+      labels:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      name: {{ .name }}
+      {{- if $appValues.namespace }}
+      namespace: {{ $appValues.namespace }}
+      {{- end }}
+      {{- with $appValues.finalizers }}
+      finalizers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      project: {{ tpl $appValues.project $ }}
+      {{- with $appValues.source }}
+      source:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $appValues.sources }}
+      sources:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      destination:
+      {{- toYaml $appValues.destination | nindent 8 }}
+      {{- with $appValues.syncPolicy }}
+      syncPolicy:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $appValues.revisionHistoryLimit }}
+      revisionHistoryLimit: {{ . }}
+      {{- end }}
+      {{- with $appValues.ignoreDifferences }}
+      ignoreDifferences:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $appValues.info }}
+      info:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+{{- end }}
