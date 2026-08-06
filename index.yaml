@@ -2,6 +2,35 @@ apiVersion: v1
 entries:
   app:
   - apiVersion: v2
+    created: "2026-08-06T15:11:29.281235757Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes Deployment
+    digest: 56c56222dafe7291ae464b15f8143b1172970cdfd0caac99d60df744e75665ab
+    keywords:
+    - deployment
+    - StatefulSet
+    - configmap
+    - secret
+    - HorizontalPodAutoscaler
+    - hpa
+    - VerticalPodAutoscaler
+    - podDisruptionBudget
+    - service
+    - ingress
+    - analysisTemplate
+    - rbac
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: app
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/app-0.17.5/app-0.17.5.tgz
+    version: 0.17.5
+  - apiVersion: v2
     created: "2026-08-06T13:55:26.512161799Z"
     dependencies:
     - name: base
@@ -61,6 +90,21 @@ entries:
     version: 0.17.3
   argo-applications:
   - apiVersion: v2
+    created: "2026-08-06T15:11:29.592588441Z"
+    description: A Helm chart for Kubernetes argo applications
+    digest: 1a80ce993f03f4d1695c9ee921e04c4c140578faeb44211256b2810a9a541044
+    keywords:
+    - argocd
+    - workflows
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: argo-applications
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/argo-applications-0.17.5/argo-applications-0.17.5.tgz
+    version: 0.17.5
+  - apiVersion: v2
     created: "2026-08-06T13:55:26.749806022Z"
     description: A Helm chart for Kubernetes argo applications
     digest: 4c09589308eab67e2d71895fd9fd56769c4e847c7a243ebf4b24bbfb0ca9f72e
@@ -76,6 +120,25 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/argo-applications-0.17.4/argo-applications-0.17.4.tgz
     version: 0.17.4
   argo-workflows:
+  - apiVersion: v2
+    created: "2026-08-06T15:11:29.797958975Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes argocd workflows
+    digest: ccadb761074203ba2dea0719c5ed6296563ce1ef64ad8b36ca51b682cff1b19c
+    keywords:
+    - argocd
+    - workflows
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: argo-workflows
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/argo-workflows-0.17.5/argo-workflows-0.17.5.tgz
+    version: 0.17.5
   - apiVersion: v2
     created: "2026-08-06T13:55:26.969871544Z"
     dependencies:
@@ -96,6 +159,30 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/argo-workflows-0.17.4/argo-workflows-0.17.4.tgz
     version: 0.17.4
   base:
+  - apiVersion: v2
+    created: "2026-08-06T15:11:30.038931901Z"
+    description: A Helm chart for Kubernetes with helm named templates
+    digest: 7693313134d607b7c1651755b0a9c7e8eacc7bf587d9fc93d290b601c411c6bc
+    keywords:
+    - deployment
+    - configmap
+    - secret
+    - HorizontalPodAutoscaler
+    - hpa
+    - VerticalPodAutoscaler
+    - podDisruptionBudget
+    - service
+    - ingress
+    - storageClass
+    - pvc
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: base
+    type: library
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/base-0.17.5/base-0.17.5.tgz
+    version: 0.17.5
   - apiVersion: v2
     created: "2026-08-06T13:55:27.166462786Z"
     description: A Helm chart for Kubernetes with helm named templates
@@ -122,6 +209,24 @@ entries:
     version: 0.17.4
   cronjob:
   - apiVersion: v2
+    created: "2026-08-06T15:11:30.282413077Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes cronjob
+    digest: 3c28d29979d701c946be6120f91ceff03ca380ff589cf13b0684d18913515115
+    keywords:
+    - cronjob
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: cronjob
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/cronjob-0.17.5/cronjob-0.17.5.tgz
+    version: 0.17.5
+  - apiVersion: v2
     created: "2026-08-06T13:55:27.400305304Z"
     dependencies:
     - name: base
@@ -140,6 +245,30 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/cronjob-0.17.4/cronjob-0.17.4.tgz
     version: 0.17.4
   default-base:
+  - apiVersion: v2
+    created: "2026-08-06T15:11:30.46999794Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes - default-base for namespaces
+    digest: e502acf851aaa87d87c90abe5a83b3cbe87f37a39970044651a556ef7f88e9cf
+    keywords:
+    - BackendConfig
+    - StorageClass
+    - pvc
+    - configmap
+    - secret
+    - tls
+    - dockerconfigjson
+    - rbac
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: default-base
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/default-base-0.17.5/default-base-0.17.5.tgz
+    version: 0.17.5
   - apiVersion: v2
     created: "2026-08-06T13:55:27.626727636Z"
     dependencies:
@@ -166,6 +295,24 @@ entries:
     version: 0.17.4
   ingress:
   - apiVersion: v2
+    created: "2026-08-06T15:11:30.715180172Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes ingress
+    digest: 5fbfc8583fbe93637b343d724581bacec92b0bae15cfe4c28c1f86316fbac0fa
+    keywords:
+    - ingress
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: ingress
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/ingress-0.17.5/ingress-0.17.5.tgz
+    version: 0.17.5
+  - apiVersion: v2
     created: "2026-08-06T13:55:27.842263962Z"
     dependencies:
     - name: base
@@ -184,6 +331,24 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/ingress-0.17.4/ingress-0.17.4.tgz
     version: 0.17.4
   job:
+  - apiVersion: v2
+    created: "2026-08-06T15:11:30.920561257Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes job
+    digest: ced8b158d1d2b7d17d97a4f340ae88a6ffc96b7a7101b01725a27f4760d47787
+    keywords:
+    - job
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: job
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/job-0.17.5/job-0.17.5.tgz
+    version: 0.17.5
   - apiVersion: v2
     created: "2026-08-06T13:55:28.117461586Z"
     dependencies:
@@ -204,6 +369,24 @@ entries:
     version: 0.17.4
   prometheus-rules:
   - apiVersion: v2
+    created: "2026-08-06T15:11:31.071817187Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Prometheus Rules
+    digest: 4932d5700cd58c6c9539cb9730ea1e9e20340f5d0b1e2d58b234dce512cbed3b
+    keywords:
+    - job
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: prometheus-rules
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/prometheus-rules-0.17.5/prometheus-rules-0.17.5.tgz
+    version: 0.17.5
+  - apiVersion: v2
     created: "2026-08-06T13:55:28.327607866Z"
     dependencies:
     - name: base
@@ -223,6 +406,21 @@ entries:
     version: 0.17.4
   rbac:
   - apiVersion: v2
+    created: "2026-08-06T15:11:31.27744306Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes rbac
+    digest: 44e17a68f61cd3ec4070550cda3afb4440d1c43f129ee34139067bea6b06458e
+    keywords:
+    - rbac
+    name: rbac
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/rbac-0.17.5/rbac-0.17.5.tgz
+    version: 0.17.5
+  - apiVersion: v2
     created: "2026-08-06T13:55:28.562233955Z"
     dependencies:
     - name: base
@@ -238,6 +436,24 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/rbac-0.17.4/rbac-0.17.4.tgz
     version: 0.17.4
   service:
+  - apiVersion: v2
+    created: "2026-08-06T15:11:31.480147043Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes service
+    digest: 1985b9b464d7e91f96e91c5ae556afcf6147e01d12e171c910a827c61eb68863
+    keywords:
+    - service
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: service
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/service-0.17.5/service-0.17.5.tgz
+    version: 0.17.5
   - apiVersion: v2
     created: "2026-08-06T13:55:28.800734778Z"
     dependencies:
@@ -256,4 +472,4 @@ entries:
     urls:
     - https://github.com/ferodrinks/helm-charts/releases/download/service-0.17.4/service-0.17.4.tgz
     version: 0.17.4
-generated: "2026-08-06T13:55:28.80074637Z"
+generated: "2026-08-06T15:11:31.480192358Z"
