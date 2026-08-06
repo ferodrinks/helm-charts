@@ -1,0 +1,252 @@
+apiVersion: v1
+entries:
+  app:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:17.622538822Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes Deployment
+    digest: 1e8dec9b9ddfb3ed90ecfa096d528536bf47094a1c5ef336303f86c7b655e54c
+    keywords:
+    - deployment
+    - StatefulSet
+    - configmap
+    - secret
+    - HorizontalPodAutoscaler
+    - hpa
+    - VerticalPodAutoscaler
+    - podDisruptionBudget
+    - service
+    - ingress
+    - analysisTemplate
+    - rbac
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: app
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/app-0.18.0/app-0.18.0.tgz
+    version: 0.18.0
+  argo-applications:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:17.759148986Z"
+    description: A Helm chart for Kubernetes argo applications
+    digest: e81865e2ee617d78192836a4a28882444cef6c8b515eb6fb3a51b736e17c5542
+    keywords:
+    - argocd
+    - workflows
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: argo-applications
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/argo-applications-0.18.0/argo-applications-0.18.0.tgz
+    version: 0.18.0
+  argo-workflows:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:17.902387633Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes argocd workflows
+    digest: f28eb74cbc9fa3b546ff2bb18e13be1dfe3f0019d67e7288409de0800676a92f
+    keywords:
+    - argocd
+    - workflows
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: argo-workflows
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/argo-workflows-0.18.0/argo-workflows-0.18.0.tgz
+    version: 0.18.0
+  base:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.029877846Z"
+    description: A Helm chart for Kubernetes with helm named templates
+    digest: 223b2fd6edfe2b0c13b53551a6ae36c947149240e0f232306ec1b5061cc321e3
+    keywords:
+    - deployment
+    - configmap
+    - secret
+    - HorizontalPodAutoscaler
+    - hpa
+    - VerticalPodAutoscaler
+    - podDisruptionBudget
+    - service
+    - ingress
+    - storageClass
+    - pvc
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: base
+    type: library
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/base-0.18.0/base-0.18.0.tgz
+    version: 0.18.0
+  cronjob:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.185979664Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes cronjob
+    digest: b7b2b74bc44a92a61893b67532d095a967a5fa7d051dccd11270229fadccbceb
+    keywords:
+    - cronjob
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: cronjob
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/cronjob-0.18.0/cronjob-0.18.0.tgz
+    version: 0.18.0
+  default-base:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.317643398Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes - default-base for namespaces
+    digest: 17c1b86da20b2211ce692c7b00a6f29314f5e5e2ce57aa4ee21c5a3a94f194c2
+    keywords:
+    - BackendConfig
+    - StorageClass
+    - pvc
+    - configmap
+    - secret
+    - tls
+    - dockerconfigjson
+    - rbac
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: default-base
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/default-base-0.18.0/default-base-0.18.0.tgz
+    version: 0.18.0
+  ingress:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.462626348Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes ingress
+    digest: 42530e40009336b595b2bf7d2c7bd1a7b92350f244a61f637ebf312912731652
+    keywords:
+    - ingress
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: ingress
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/ingress-0.18.0/ingress-0.18.0.tgz
+    version: 0.18.0
+  job:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.593753625Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes job
+    digest: a1b5bc3862ee7a6c2a5a460af8b082c1b8a55f12ac997213f17f0483e55aacac
+    keywords:
+    - job
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: job
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/job-0.18.0/job-0.18.0.tgz
+    version: 0.18.0
+  prometheus-rules:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.745944467Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Prometheus Rules
+    digest: b38407caf7cd36dc1424b0e3fd5b6180ed5255938be2fa65cf889b82bfa2ab65
+    keywords:
+    - job
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: prometheus-rules
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/prometheus-rules-0.18.0/prometheus-rules-0.18.0.tgz
+    version: 0.18.0
+  rbac:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:18.921839188Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes rbac
+    digest: 59d20f703ad59d0485dc637599058ce5b418e8ed531a541e2c9cec79d18bd717
+    keywords:
+    - rbac
+    name: rbac
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/rbac-0.18.0/rbac-0.18.0.tgz
+    version: 0.18.0
+  service:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-06T16:26:19.094320325Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes service
+    digest: 7aedeaff71dd0c1c94685ca384176ba8ea8f771d7f4543a43f19c2eabefb096d
+    keywords:
+    - service
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: service
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/service-0.18.0/service-0.18.0.tgz
+    version: 0.18.0
+generated: "2026-08-06T16:26:19.094329648Z"
