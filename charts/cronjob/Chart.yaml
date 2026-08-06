@@ -16,3 +16,6 @@ dependencies:
   - name: base
     version: ~0
     repository: file://../base
+
+annotations:
+  org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts

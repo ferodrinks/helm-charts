@@ -12,3 +12,6 @@ keywords:
 maintainers:
   - name: juri
     url: https://github.com/ferodrinks/helm-charts
+
+annotations:
+  org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
