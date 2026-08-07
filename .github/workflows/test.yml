@@ -14,6 +14,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Install Helm
+        uses: azure/setup-helm@v5
+        with:
+          version: v4.2.3
+
+      - name: Vendor the base library into each chart
+        run: |
+          for chart in charts/*/; do
+            helm dependency update "$chart"
+          done
+
       - name: Run chart unit tests
         run: |
           docker run --rm \
