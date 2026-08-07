@@ -22,10 +22,12 @@ rm -f charts/*/Chart.lock && rm -rf charts/*/charts
 for c in charts/*/; do helm dependency update "$c"; done
 
 # the full suite - this is what CI runs
-docker run --rm -v "$PWD:/apps" helmunittest/helm-unittest:latest ./charts/*
+docker run --rm --user "$(id -u):$(id -g)" --env HOME=/tmp \
+  -v "$PWD:/apps" helmunittest/helm-unittest:latest ./charts/*
 
 # a single suite while iterating
-docker run --rm -v "$PWD:/apps" helmunittest/helm-unittest:latest \
+docker run --rm --user "$(id -u):$(id -g)" --env HOME=/tmp \
+  -v "$PWD:/apps" helmunittest/helm-unittest:latest \
   -f 'tests/deployment_test.yaml' charts/app
 
 helm lint charts/*

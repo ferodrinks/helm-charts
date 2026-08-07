@@ -15,7 +15,12 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Run chart unit tests
-        run: docker run --rm -v "$PWD:/apps" helmunittest/helm-unittest:latest ./charts/*
+        run: |
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            --env HOME=/tmp \
+            --volume "$PWD:/apps" \
+            helmunittest/helm-unittest:latest ./charts/*
 
   render:
     runs-on: ubuntu-latest
