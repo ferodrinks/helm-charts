@@ -4,6 +4,41 @@ entries:
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
+    created: "2026-08-07T00:33:40.618798355Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes Deployment
+    digest: 148ead4b0f1bb1a38c32ea66c12a06a6bf0bc3a5763d79170d29243b77a38d2e
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - deployment
+    - StatefulSet
+    - configmap
+    - secret
+    - HorizontalPodAutoscaler
+    - hpa
+    - VerticalPodAutoscaler
+    - podDisruptionBudget
+    - service
+    - ingress
+    - analysisTemplate
+    - rbac
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: app
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/app-0.18.5/app-0.18.5.tgz
+    version: 0.18.5
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
     created: "2026-08-06T16:26:17.622538822Z"
     dependencies:
     - name: base
@@ -36,6 +71,27 @@ entries:
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
+    created: "2026-08-07T00:33:40.770193538Z"
+    description: A Helm chart for Kubernetes argo applications
+    digest: 9ae88a86b6f5721c948eef1a23a03f52e138c6bb182596057aa2b438e6e73d74
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - argocd
+    - workflows
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: argo-applications
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/argo-applications-0.18.5/argo-applications-0.18.5.tgz
+    version: 0.18.5
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
     created: "2026-08-06T16:26:17.759148986Z"
     description: A Helm chart for Kubernetes argo applications
     digest: e81865e2ee617d78192836a4a28882444cef6c8b515eb6fb3a51b736e17c5542
@@ -51,6 +107,31 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/argo-applications-0.18.0/argo-applications-0.18.0.tgz
     version: 0.18.0
   argo-workflows:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-07T00:33:40.895087338Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes argocd workflows
+    digest: c382f1079ce1110e341201d24ec82923e23fbbe876907e1236d56920d8400e09
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - argocd
+    - workflows
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: argo-workflows
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/argo-workflows-0.18.5/argo-workflows-0.18.5.tgz
+    version: 0.18.5
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
@@ -73,6 +154,36 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/argo-workflows-0.18.0/argo-workflows-0.18.0.tgz
     version: 0.18.0
   base:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-07T00:33:41.05181753Z"
+    description: A Helm chart for Kubernetes with helm named templates
+    digest: 02b5a49e45727e6249d6b967a0ca106acb44a47880abc4855582bec605a76bb0
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - deployment
+    - configmap
+    - secret
+    - HorizontalPodAutoscaler
+    - hpa
+    - VerticalPodAutoscaler
+    - podDisruptionBudget
+    - service
+    - ingress
+    - storageClass
+    - pvc
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: base
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: library
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/base-0.18.5/base-0.18.5.tgz
+    version: 0.18.5
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
@@ -103,6 +214,30 @@ entries:
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
+    created: "2026-08-07T00:33:41.192476821Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes cronjob
+    digest: 8573ab97c83b53393e97f4dc531c36676894732c26d6d6cae3eaadfe544e3133
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - cronjob
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: cronjob
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/cronjob-0.18.5/cronjob-0.18.5.tgz
+    version: 0.18.5
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
     created: "2026-08-06T16:26:18.185979664Z"
     dependencies:
     - name: base
@@ -121,6 +256,37 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/cronjob-0.18.0/cronjob-0.18.0.tgz
     version: 0.18.0
   default-base:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-07T00:33:41.33891399Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes - default-base for namespaces
+    digest: 5bc483f0999111b62ccaa3df0e48c9b32bfeaef3bc7888f345381cfbe994175f
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - BackendConfig
+    - StorageClass
+    - pvc
+    - configmap
+    - secret
+    - tls
+    - dockerconfigjson
+    - rbac
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: default-base
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/default-base-0.18.5/default-base-0.18.5.tgz
+    version: 0.18.5
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
@@ -151,6 +317,30 @@ entries:
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
+    created: "2026-08-07T00:33:41.47254757Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes ingress
+    digest: b71494cca3fdaa77d4f07b4bba3b437b20c2ac96373cd77e677f298566b9dd23
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - ingress
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: ingress
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/ingress-0.18.5/ingress-0.18.5.tgz
+    version: 0.18.5
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
     created: "2026-08-06T16:26:18.462626348Z"
     dependencies:
     - name: base
@@ -169,6 +359,30 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/ingress-0.18.0/ingress-0.18.0.tgz
     version: 0.18.0
   job:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-07T00:33:41.577066611Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes job
+    digest: 344db809a3ac6f6e56b48e8a60621717eb83e0d6e76a04f5f0c85624e2040514
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - job
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: job
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/job-0.18.5/job-0.18.5.tgz
+    version: 0.18.5
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
@@ -193,6 +407,30 @@ entries:
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
+    created: "2026-08-07T00:33:41.697441893Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Prometheus Rules
+    digest: 9a942de64e85420fd32601201df6f8a8b37c64f004b968dd2861d9a3749ab8e6
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - job
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: prometheus-rules
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/prometheus-rules-0.18.5/prometheus-rules-0.18.5.tgz
+    version: 0.18.5
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
     created: "2026-08-06T16:26:18.745944467Z"
     dependencies:
     - name: base
@@ -214,6 +452,30 @@ entries:
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
+    created: "2026-08-07T00:33:41.828000736Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes rbac
+    digest: 4a1d67b529e79137fbb0988d35d8489a296a5f100c565e4bd45a88a25be21315
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - rbac
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: rbac
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/rbac-0.18.5/rbac-0.18.5.tgz
+    version: 0.18.5
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
     created: "2026-08-06T16:26:18.921839188Z"
     dependencies:
     - name: base
@@ -229,6 +491,30 @@ entries:
     - https://github.com/ferodrinks/helm-charts/releases/download/rbac-0.18.0/rbac-0.18.0.tgz
     version: 0.18.0
   service:
+  - annotations:
+      org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
+    apiVersion: v2
+    created: "2026-08-07T00:33:41.950868047Z"
+    dependencies:
+    - name: base
+      repository: file://../base
+      version: ~0
+    description: A Helm chart for Kubernetes service
+    digest: 415b2e7e333e8de10d4cb2eea58efd1e852ade240537e57bda9d5b4596f6220d
+    home: https://github.com/ferodrinks/helm-charts
+    keywords:
+    - service
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: juri
+      url: https://github.com/ferodrinks/helm-charts
+    name: service
+    sources:
+    - https://github.com/ferodrinks/helm-charts
+    type: application
+    urls:
+    - https://github.com/ferodrinks/helm-charts/releases/download/service-0.18.5/service-0.18.5.tgz
+    version: 0.18.5
   - annotations:
       org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts
     apiVersion: v2
@@ -249,4 +535,4 @@ entries:
     urls:
     - https://github.com/ferodrinks/helm-charts/releases/download/service-0.18.0/service-0.18.0.tgz
     version: 0.18.0
-generated: "2026-08-06T16:26:19.094329648Z"
+generated: "2026-08-07T00:33:41.950930313Z"
