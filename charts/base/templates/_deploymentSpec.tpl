@@ -2,7 +2,11 @@
 define container image
 */}}
 {{- define "base.image" -}}
+{{- if .digest }}
+image: "{{ .repository }}@{{ .digest }}"
+{{- else }}
 image: "{{ .repository }}:{{ .tag | toString }}"
+{{- end }}
 {{- if .pullPolicy }}
 imagePullPolicy: {{ .pullPolicy }}
 {{- else }}
@@ -52,7 +56,7 @@ pod affinity
 {{- if or .Values.affinity $podAntiAffinity.enabled }}
 affinity:
 {{- with .Values.affinity }}
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- if $podAntiAffinity.enabled }}
   podAntiAffinity:
@@ -100,7 +104,7 @@ nodeSelector:
 {{- end }}
 {{- with .Values.tolerations }}
 tolerations:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -120,6 +124,7 @@ envFrom:
       name: {{ $configMapName }}
 {{- end }}
 {{- end }}
+{{- if or .environment.metadata .environment.secretVariables .environment.configmapVariables .environment.variables }}
 env:
 {{- range $variableName, $value := .environment.metadata }}
   - name: {{ $variableName }}
@@ -148,6 +153,7 @@ env:
 {{- end }}
 {{- end }}
 {{- end }}
+{{- end }}
 
 {{/*
 define pod probes
@@ -155,15 +161,15 @@ define pod probes
 {{- define "base.containerProbes" -}}
 {{- with .livenessProbe }}
 livenessProbe:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- with .readinessProbe }}
 readinessProbe:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- with .startupProbe }}
 startupProbe:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -173,7 +179,7 @@ define pod lifecycle
 {{- define "base.containerLifecycle" -}}
 {{- with .lifecycle }}
 lifecycle:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -183,7 +189,7 @@ define pod resources
 {{- define "base.containerResources" -}}
 {{- with .resources }}
 resources:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -191,9 +197,13 @@ resources:
 define container securityContext
 */}}
 {{- define "base.containerSecurityContext" -}}
-{{- with .securityContext }}
+{{- $preset := dict }}
+{{- if eq (.securityPreset | default "") "restricted" }}
+{{- $preset = dict "allowPrivilegeEscalation" false "runAsNonRoot" true "capabilities" (dict "drop" (list "ALL")) "seccompProfile" (dict "type" "RuntimeDefault") }}
+{{- end }}
+{{- with merge (deepCopy (.securityContext | default dict)) $preset }}
 securityContext:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -201,9 +211,13 @@ securityContext:
 define pod securityContext
 */}}
 {{- define "base.podSecurityContext" -}}
-{{- with .podSecurityContext }}
+{{- $preset := dict }}
+{{- if eq (.securityPreset | default "") "restricted" }}
+{{- $preset = dict "runAsNonRoot" true "seccompProfile" (dict "type" "RuntimeDefault") }}
+{{- end }}
+{{- with merge (deepCopy (.podSecurityContext | default dict)) $preset }}
 securityContext:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -213,7 +227,7 @@ define container security
 {{- define "base.imagePullSecrets" -}}
 {{- with .imagePullSecrets }}
 imagePullSecrets:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -238,7 +252,7 @@ define pod security
 {{- define "base.containerVolumeMounts" -}}
 {{- with .volumeMounts }}
 volumeMounts:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -248,11 +262,11 @@ define pod command and args
 {{- define "base.containerCommand" -}}
 {{- with .command }}
 command:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- with .args }}
 args:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 
@@ -268,7 +282,7 @@ hostNetwork: {{ .hostNetwork }}
 {{- end }}
 {{- with .hostAliases }}
 hostAliases:
-{{ toYaml . | indent 2 }}
+{{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
 

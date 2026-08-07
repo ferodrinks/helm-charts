@@ -10,7 +10,11 @@ permissions:
   packages: write
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
   release:
+    needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

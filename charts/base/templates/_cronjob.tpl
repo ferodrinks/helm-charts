@@ -49,17 +49,16 @@ spec:
       parallelism: {{ $root.Values.parallelism }}
       {{- end }}
       template:
-        {{- if or $root.Values.podAnnotations $root.Values.podLabels }}
         metadata:
           {{- if $root.Values.podAnnotations }}
           annotations:
             {{- include "base.valuesPairs" $root.Values.podAnnotations | trim | nindent 12 }}
           {{- end }}
-          {{- with $root.Values.podLabels }}
           labels:
+            {{- include "base.labels" $root | trim | nindent 12 }}
+            {{- with $root.Values.podLabels }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
-        {{- end }}
+            {{- end }}
         spec:
           {{- with include "base.podDefaultProperties" $root }}
           {{- . | trim | nindent 10 }}
@@ -67,29 +66,10 @@ spec:
           {{- if $root.Values.podActiveDeadlineSeconds }}
           activeDeadlineSeconds: {{ $root.Values.podActiveDeadlineSeconds }}
           {{- end }}
-          {{- if $root.Values.initContainers }}
-          initContainers:
-            {{- range $containerName, $containerValues := $root.Values.initContainers }}
-            - name: {{ $containerName }}
-              {{- include "base.image" (merge dict ($containerValues.image | default dict) $root.Values.image) | nindent 10 }}
-              {{- with include "base.containerDefaultProperties" $containerValues }}
-              {{- . | trim | nindent 14 }}
-              {{- end }}
-            {{- end }}
+          {{- with include "base.initContainers" $root }}
+          {{- . | trim | nindent 10 }}
           {{- end }}
-          containers:
-            {{- range $containerName, $containerValues := $root.Values.extraContainers }}
-            - name: {{ $containerName }}
-              {{- include "base.image" (merge dict ($containerValues.image | default dict) $root.Values.image) | nindent 14 }}
-              {{- with include "base.containerDefaultProperties" $containerValues }}
-              {{- . | trim | nindent 14 }}
-              {{- end }}
-            {{- end }}
-            - name: {{ include "base.name" $root }}
-              {{- include "base.image" $root.Values.image | nindent 14 }}
-              {{- with include "base.containerDefaultProperties" $root.Values }}
-              {{- . | trim | nindent 14 }}
-              {{- end }}
+          {{- include "base.containers" $root | trim | nindent 10 }}
           {{- with include "base.volumes" $root }}
           {{- . | trim | nindent 10 }}
           {{- end }}

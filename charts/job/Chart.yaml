@@ -3,7 +3,7 @@ name: job
 description: A Helm chart for Kubernetes job
 type: application
 
-version: 0.18.0
+version: 0.18.5
 
 keywords:
   - job
@@ -16,6 +16,13 @@ dependencies:
   - name: base
     version: ~0
     repository: file://../base
+
+kubeVersion: ">=1.23.0-0"
+
+home: https://github.com/ferodrinks/helm-charts
+
+sources:
+  - https://github.com/ferodrinks/helm-charts
 
 annotations:
   org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts

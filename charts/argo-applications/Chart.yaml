@@ -3,7 +3,7 @@ name: argo-applications
 description: A Helm chart for Kubernetes argo applications
 type: application
 
-version: 0.18.0
+version: 0.18.5
 
 keywords:
   - argocd
@@ -12,6 +12,13 @@ keywords:
 maintainers:
   - name: juri
     url: https://github.com/ferodrinks/helm-charts
+
+kubeVersion: ">=1.23.0-0"
+
+home: https://github.com/ferodrinks/helm-charts
+
+sources:
+  - https://github.com/ferodrinks/helm-charts
 
 annotations:
   org.opencontainers.image.source: https://github.com/ferodrinks/helm-charts

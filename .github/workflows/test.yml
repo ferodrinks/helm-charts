@@ -1,0 +1,93 @@
+name: Test Charts
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Run chart unit tests
+        run: docker run --rm -v "$PWD:/apps" helmunittest/helm-unittest:latest ./charts/*
+
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Helm
+        uses: azure/setup-helm@v5
+        with:
+          version: v4.2.3
+
+      - name: Install kubeconform
+        run: |
+          curl -sSLo kubeconform.tar.gz \
+            https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xf kubeconform.tar.gz kubeconform
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: Validate rendered manifests
+        run: |
+          for chart in charts/*/; do
+            [ -d "${chart}ci" ] || continue
+            for values in "${chart}ci"/*-values.yaml; do
+              echo "::group::${chart} $(basename "$values")"
+              helm dependency update "$chart" >/dev/null
+              helm template test "$chart" -f "$values" |
+                kubeconform -strict -summary \
+                  -kubernetes-version 1.31.0 \
+                  -schema-location default \
+                  -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
+              echo "::endgroup::"
+            done
+          done
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v5
+        with:
+          version: v4.2.3
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.8.0
+
+      - name: Find changed charts
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Lint changed charts
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+
+      - name: Create a cluster
+        if: steps.list-changed.outputs.changed == 'true'
+        uses: helm/kind-action@v1.14.0
+
+      - name: Install changed charts
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct install --target-branch ${{ github.event.repository.default_branch }}

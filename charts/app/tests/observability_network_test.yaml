@@ -1,0 +1,263 @@
+suite: network policies and service monitors
+templates:
+  - templates/base.yaml
+release:
+  name: my-release
+set:
+  image.repository: example.com/app
+  image.tag: "1.2.3"
+  service.enabled: false
+
+tests:
+  - it: should render neither by default
+    asserts:
+      - hasDocuments:
+          count: 1
+
+  - it: should select the workload pods by default
+    set:
+      networkPolicies:
+        - ingress:
+            - from:
+                - podSelector:
+                    matchLabels:
+                      role: frontend
+    asserts:
+      - equal:
+          path: metadata.name
+          value: my-release
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+      - equal:
+          path: spec.podSelector.matchLabels
+          value:
+            app: my-release
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should derive policyTypes from the rules given
+    set:
+      networkPolicies:
+        - ingress:
+            - from:
+                - podSelector:
+                    matchLabels:
+                      role: frontend
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+    asserts:
+      - equal:
+          path: spec.policyTypes
+          value:
+            - Ingress
+            - Egress
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should support a deny-all policy with no rules
+    set:
+      networkPolicies:
+        - name: deny-all
+          policyTypes:
+            - Ingress
+            - Egress
+    asserts:
+      - equal:
+          path: metadata.name
+          value: deny-all
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+      - notExists:
+          path: spec.ingress
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+      - equal:
+          path: spec.policyTypes
+          value:
+            - Ingress
+            - Egress
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should select every pod in the namespace when podSelector is empty
+    set:
+      networkPolicies:
+        - name: default-deny
+          podSelector: {}
+          policyTypes:
+            - Ingress
+            - Egress
+    asserts:
+      - equal:
+          path: spec.podSelector
+          value: {}
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should omit policyTypes rather than emit an empty key
+    set:
+      networkPolicies:
+        - name: no-rules
+    asserts:
+      - notExists:
+          path: spec.policyTypes
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should derive Egress alone for an egress-only policy
+    set:
+      networkPolicies:
+        - egress:
+            - to:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+              ports:
+                - protocol: TCP
+                  port: 5432
+    asserts:
+      - equal:
+          path: spec.policyTypes
+          value:
+            - Egress
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+      - equal:
+          path: spec.egress[0].ports[0].port
+          value: 5432
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should honour a custom podSelector, namespace and annotations
+    set:
+      networkPolicies:
+        - name: custom
+          namespace: other-ns
+          annotations:
+            owner: platform
+          podSelector:
+            matchLabels:
+              tier: backend
+          ingress:
+            - {}
+    asserts:
+      - equal:
+          path: spec.podSelector.matchLabels.tier
+          value: backend
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+      - equal:
+          path: metadata.namespace
+          value: other-ns
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+      - equal:
+          path: metadata.annotations.owner
+          value: platform
+        documentSelector:
+          path: kind
+          value: NetworkPolicy
+
+  - it: should suffix additional network policies
+    set:
+      networkPolicies:
+        - ingress:
+            - {}
+        - ingress:
+            - {}
+    asserts:
+      - hasDocuments:
+          count: 3
+      - exists:
+          path: spec.podSelector
+        documentSelector:
+          path: metadata.name
+          value: my-release-2
+
+  - it: should render a service monitor with sensible defaults
+    set:
+      serviceMonitors:
+        - {}
+    asserts:
+      - isKind:
+          of: ServiceMonitor
+        documentSelector:
+          path: kind
+          value: ServiceMonitor
+      - equal:
+          path: spec.endpoints[0]
+          value:
+            port: http
+            path: /metrics
+            interval: 30s
+        documentSelector:
+          path: kind
+          value: ServiceMonitor
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app: my-release
+        documentSelector:
+          path: kind
+          value: ServiceMonitor
+
+  - it: should honour explicit monitor port, path and interval
+    set:
+      serviceMonitors:
+        - port: metrics
+          path: /actuator/prometheus
+          interval: 15s
+    asserts:
+      - equal:
+          path: spec.endpoints[0]
+          value:
+            port: metrics
+            path: /actuator/prometheus
+            interval: 15s
+        documentSelector:
+          path: kind
+          value: ServiceMonitor
+
+  - it: should pass explicit endpoints through untouched
+    set:
+      serviceMonitors:
+        - endpoints:
+            - port: metrics
+              scheme: https
+              tlsConfig:
+                insecureSkipVerify: true
+    asserts:
+      - equal:
+          path: spec.endpoints[0].scheme
+          value: https
+        documentSelector:
+          path: kind
+          value: ServiceMonitor
+
+  - it: should suffix additional service monitors
+    set:
+      serviceMonitors:
+        - port: http
+        - port: metrics
+    asserts:
+      - hasDocuments:
+          count: 3
+      - equal:
+          path: spec.endpoints[0].port
+          value: metrics
+        documentSelector:
+          path: metadata.name
+          value: my-release-2
